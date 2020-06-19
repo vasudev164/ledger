@@ -1,0 +1,10 @@
+{% extends "ledger/base.html" %}
+{% block title %}New Transaction{% endblock %}
+{% block body %}
+    <h1>{{ account.name }}</h1>
+    <form action="{% url 'ledger:new_transaction' account.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="add transaction" class="btn btn-primary">
+    </form>
+{% endblock %}

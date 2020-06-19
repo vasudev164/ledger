@@ -1,0 +1,36 @@
+{% extends "ledger/base.html" %}
+{% block title %}Transactions{% endblock %}
+{% block body %}
+    <div class="jumbotron">
+        <h1>Account Name : {{account.name}}</h1>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p><a href="{% url 'ledger:new_transaction' account.id %}" class="btn btn-primary">add transaction</a></p>
+            <p><a href="{% url 'ledger:index' %}" class="btn btn-primary">back to Day Book</a></p>
+        </div>
+        <div class="col">
+            <h1>Transactions</h1>
+            <table class="table table-bordered table-hover ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">date</th>
+                        <th scope="col">particular</th>
+                        <th scope="col">credit</th>
+                        <th scope="col">debit</th>
+                    </tr>
+                </thead>
+                {% for transaction in acc_transactions %}
+                    <tr>
+                        <td>{{transaction.transaction_added}}</td>
+                        <td>{{transaction.particular}}</td>
+                        <td>{{transaction.cash_in}}</td>
+                        <td>{{transaction.cash_out}}</td>
+                    </tr>
+                {% empty %}
+                    <p>no transactions found</p>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

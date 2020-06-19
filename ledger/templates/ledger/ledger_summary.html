@@ -1,0 +1,41 @@
+{% extends "ledger/base.html" %}
+{% block title %}ledger summary{% endblock %}
+{% block body %}
+    <h1>Ledger Summary</h1>
+    <h3>ledger total :</h3>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Total Credit</th>
+                <th>Total Debit</th>
+                <th>Grand Total</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>{{all_ctotal}}</td>
+            <td>{{all_dtotal}}</td>
+            <td>{{all_total}}</td>
+        </tr>
+    </table>
+    <h3>account summary :</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">name</th>
+                <th scope="col">Credit</th>
+                <th scope="col">Debit</th>
+                <th scope="col">total</th>
+            </tr>
+        </thead>
+        {% for c, d, t, account in totals %}
+        <tr>
+            <td>{{ account.id }}</td>
+            <td><a href="{% url 'ledger:transactions' account.id %}">{{account}}</a></td>
+            <td>{{ c }}</td>
+            <td>{{ d }}</td>
+            <td>{{ t }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

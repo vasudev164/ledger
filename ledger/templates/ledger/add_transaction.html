@@ -1,0 +1,16 @@
+{% extends "ledger/base.html" %}
+{% block title %}Add Transaction{% endblock %}
+{% block body %}
+    <div class="jumbotron">
+        <form action="{% url 'ledger:add_transaction' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <datalist id="accounts">
+                {% for account in accounts %}
+                    <option value="{{ account.name }}">
+                {% endfor %}
+            </datalist>
+            <input type="submit" value="add transaction" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock %}

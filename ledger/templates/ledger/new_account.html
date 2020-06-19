@@ -1,0 +1,9 @@
+{% extends "ledger/base.html" %}
+{% block title %}New Account{% endblock %}
+{% block body %}
+    <form action="{% url 'ledger:new_account' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="create account" class="btn btn-primary">
+    </form>
+{% endblock %}

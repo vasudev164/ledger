@@ -1,0 +1,88 @@
+{% extends "ledger/base.html" %}
+{% block title %}Day Book{% endblock %}
+{% block navbar %}
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand btn btn-primary" href="{% url 'ledger:ledger_summary' %}">ledger_summary</a>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+{% endblock %}
+{% block body %}
+    <h1>Day Book</h1>
+    <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <h3>Accounts</h3>
+                <ul>
+                    {% for account in accounts %}
+                        <li><a href="{% url 'ledger:transactions' account.id %}">{{account}}</a></li>
+                    {% endfor%}
+                </ul>
+                <p><a href="{% url 'ledger:new_account' %}" class="btn btn-primary">add new account</a></p>
+                <p><a href="{% url 'ledger:add_transaction' %}" class="btn btn-primary">add transaction</a></p>
+                <p><a href="{% url 'ledger:ledger_summary' %}" class="btn btn-primary">ledger_summary</a></p>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <h3>Today Transactions</h3>
+                {% if today_transactions %}
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">name</th>
+                                <th scope="col">particular</th>
+                                <th scope="col">credit</th>
+                                <th scope="col">debit</th>
+                            </tr>
+                        </thead>
+                        {% for transaction in today_transactions %}
+                        <tr>
+                            <td>{{transaction.account.name}}</td>
+                            <td>{{transaction.particular}}</td>
+                            <td>{{transaction.cash_in}}</td>
+                            <td>{{transaction.cash_out}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <h3>No Transactions Today</h3>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <h3>ledger total :</h3>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Total Credit</th>
+                            <th>Total Debit</th>
+                            <th>Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>{{all_ctotal}}</td>
+                        <td>{{all_dtotal}}</td>
+                        <td>{{all_total}}</td>
+                    </tr>
+                </table>
+                <h3>All Transactions</h3>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">particular</th>
+                            <th scope="col">credit</th>
+                            <th scope="col">debit</th>
+                        </tr>
+                    </thead>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{transaction.account.name}}</td>
+                        <td>{{transaction.particular}}</td>
+                        <td>{{transaction.cash_in}}</td>
+                        <td>{{transaction.cash_out}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+{% endblock %}
